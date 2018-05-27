@@ -99,8 +99,8 @@
       <tags>
         <tag>golang</tag>
         <tag>cassandra</tag>
-        <tag>nosql</tag>
         <tag>driver</tag>
+        <tag>nosql</tag>
       </tags>
   </entry>
   <entry>
@@ -153,8 +153,8 @@
       </categories>
       <tags>
         <tag>cassandra</tag>
-        <tag>data model</tag>
         <tag>nosql</tag>
+        <tag>data model</tag>
       </tags>
   </entry>
   <entry>
@@ -406,8 +406,8 @@
       </categories>
       <tags>
         <tag>golang</tag>
-        <tag>mac</tag>
         <tag>debugger</tag>
+        <tag>mac</tag>
         <tag>gdb</tag>
       </tags>
   </entry>
@@ -595,8 +595,8 @@
         <tag>centos7</tag>
         <tag>虚拟化</tag>
         <tag>openstack</tag>
-        <tag>云计算</tag>
         <tag>newton</tag>
+        <tag>云计算</tag>
       </tags>
   </entry>
   <entry>
