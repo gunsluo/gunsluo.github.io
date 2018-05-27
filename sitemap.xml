@@ -4,7 +4,7 @@
   <url>
     <loc>http://www.jerrylou.me/video/jitsi-auth-20180507.html</loc>
     
-    <lastmod>2018-05-27T04:04:09.105Z</lastmod>
+    <lastmod>2018-05-27T04:12:59.301Z</lastmod>
     
   </url>
   
@@ -58,7 +58,7 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/redis/redis-cache-performance-20170209.html</loc>
+    <loc>http://www.jerrylou.me/%E7%AC%94%E8%AE%B0/rrd-intro-20170408.html</loc>
     
     <lastmod>2018-05-26T11:07:53.180Z</lastmod>
     
@@ -72,7 +72,7 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/%E7%AC%94%E8%AE%B0/rrd-intro-20170408.html</loc>
+    <loc>http://www.jerrylou.me/redis/redis-cache-performance-20170209.html</loc>
     
     <lastmod>2018-05-26T11:07:53.180Z</lastmod>
     
@@ -93,14 +93,14 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/redis/redis-cache-backup-20170212.html</loc>
+    <loc>http://www.jerrylou.me/redis/redis-cache-algorithm-20170207.html</loc>
     
     <lastmod>2018-05-26T11:07:53.178Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/redis/redis-cache-algorithm-20170207.html</loc>
+    <loc>http://www.jerrylou.me/redis/redis-cache-backup-20170212.html</loc>
     
     <lastmod>2018-05-26T11:07:53.178Z</lastmod>
     
@@ -128,6 +128,13 @@
   </url>
   
   <url>
+    <loc>http://www.jerrylou.me/openstack/openstack-simple-intro-20161013.html</loc>
+    
+    <lastmod>2018-05-26T11:07:53.176Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.jerrylou.me/open-falcon/open-falcon-deploy-20160806.html</loc>
     
     <lastmod>2018-05-26T11:07:53.176Z</lastmod>
@@ -136,13 +143,6 @@
   
   <url>
     <loc>http://www.jerrylou.me/openstack/openstack-install-20161018.html</loc>
-    
-    <lastmod>2018-05-26T11:07:53.176Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.jerrylou.me/openstack/openstack-simple-intro-20161013.html</loc>
     
     <lastmod>2018-05-26T11:07:53.176Z</lastmod>
     
@@ -177,14 +177,14 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/im/im-system-architecture-20170628.html</loc>
+    <loc>http://www.jerrylou.me/im/im-system-workflow-20170705.html</loc>
     
     <lastmod>2018-05-26T11:07:53.173Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/im/im-system-workflow-20170705.html</loc>
+    <loc>http://www.jerrylou.me/im/im-system-architecture-20170628.html</loc>
     
     <lastmod>2018-05-26T11:07:53.173Z</lastmod>
     
@@ -198,14 +198,14 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/graphql/graphql-golang-fulfill-20180206.html</loc>
+    <loc>http://www.jerrylou.me/%E7%94%B5%E8%84%91%E7%A1%AC%E4%BB%B6/hackintosh-window-install-20130429.html</loc>
     
     <lastmod>2018-05-26T11:07:53.172Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/%E7%94%B5%E8%84%91%E7%A1%AC%E4%BB%B6/hackintosh-window-install-20130429.html</loc>
+    <loc>http://www.jerrylou.me/graphql/graphql-golang-fulfill-20180206.html</loc>
     
     <lastmod>2018-05-26T11:07:53.172Z</lastmod>
     
@@ -240,7 +240,7 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/Golang/golang-defer-explain-20170324.html</loc>
+    <loc>http://www.jerrylou.me/Golang/golang-ffjson-for-int-key-20170309.html</loc>
     
     <lastmod>2018-05-26T11:07:53.170Z</lastmod>
     
@@ -254,21 +254,21 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/Golang/golang-ffjson-for-int-key-20170309.html</loc>
+    <loc>http://www.jerrylou.me/Golang/golang-defer-explain-20170324.html</loc>
     
     <lastmod>2018-05-26T11:07:53.170Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/%E5%B7%A5%E5%85%B7/gogs-install-20170428.html</loc>
+    <loc>http://www.jerrylou.me/Golang/golang-debugger-delve-20170302.html</loc>
     
     <lastmod>2018-05-26T11:07:53.169Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/%E5%B7%A5%E5%85%B7/gitlab-ce-install-20140629.html</loc>
+    <loc>http://www.jerrylou.me/%E5%B7%A5%E5%85%B7/gogs-install-20170428.html</loc>
     
     <lastmod>2018-05-26T11:07:53.169Z</lastmod>
     
@@ -282,14 +282,14 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/blockchain/ethereum-dev-env-20170505.html</loc>
+    <loc>http://www.jerrylou.me/%E5%B7%A5%E5%85%B7/gitlab-ce-install-20140629.html</loc>
     
     <lastmod>2018-05-26T11:07:53.169Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/Golang/golang-debugger-delve-20170302.html</loc>
+    <loc>http://www.jerrylou.me/blockchain/ethereum-dev-env-20170505.html</loc>
     
     <lastmod>2018-05-26T11:07:53.169Z</lastmod>
     
@@ -303,14 +303,14 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/docker/docker-mirror-20170410.html</loc>
+    <loc>http://www.jerrylou.me/docker/deploy-auto-platform-20161109.html</loc>
     
     <lastmod>2018-05-26T11:07:53.168Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/docker/deploy-auto-platform-20161109.html</loc>
+    <loc>http://www.jerrylou.me/docker/docker-mirror-20170410.html</loc>
     
     <lastmod>2018-05-26T11:07:53.168Z</lastmod>
     
@@ -352,14 +352,7 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/nosql/cassandra-data-model-20171205.html</loc>
-    
-    <lastmod>2018-05-26T11:07:53.166Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.jerrylou.me/nosql/cassandra-nodetool-20171214.html</loc>
+    <loc>http://www.jerrylou.me/nosql/cassandra-mx4j-20171213.html</loc>
     
     <lastmod>2018-05-26T11:07:53.166Z</lastmod>
     
@@ -373,13 +366,6 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/nosql/cassandra-golang-driver-20171219.html</loc>
-    
-    <lastmod>2018-05-26T11:07:53.166Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.jerrylou.me/nosql/cassandra-install-20171204.html</loc>
     
     <lastmod>2018-05-26T11:07:53.166Z</lastmod>
@@ -387,7 +373,21 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/nosql/cassandra-mx4j-20171213.html</loc>
+    <loc>http://www.jerrylou.me/nosql/cassandra-golang-driver-20171219.html</loc>
+    
+    <lastmod>2018-05-26T11:07:53.166Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.jerrylou.me/nosql/cassandra-nodetool-20171214.html</loc>
+    
+    <lastmod>2018-05-26T11:07:53.166Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.jerrylou.me/nosql/cassandra-data-model-20171205.html</loc>
     
     <lastmod>2018-05-26T11:07:53.166Z</lastmod>
     
