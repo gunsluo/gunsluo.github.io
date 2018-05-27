@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.jerrylou.me/jitsi/jitsi-install-20180426.html</loc>
+    <loc>http://www.jerrylou.me/video/jitsi-auth-20180507.html</loc>
     
-    <lastmod>2018-05-26T16:33:03.789Z</lastmod>
+    <lastmod>2018-05-27T04:04:09.105Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.jerrylou.me/video/jitsi-install-20180426.html</loc>
+    
+    <lastmod>2018-05-27T03:51:32.140Z</lastmod>
     
   </url>
   
@@ -23,14 +30,14 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/%E7%AC%94%E8%AE%B0/use-duoshuo-20170112.html</loc>
+    <loc>http://www.jerrylou.me/%E7%BD%91%E7%BB%9C/tcp-bbr-20170509.html</loc>
     
     <lastmod>2018-05-26T11:07:53.181Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/%E7%BD%91%E7%BB%9C/tcp-bbr-20170509.html</loc>
+    <loc>http://www.jerrylou.me/%E7%AC%94%E8%AE%B0/use-duoshuo-20170112.html</loc>
     
     <lastmod>2018-05-26T11:07:53.181Z</lastmod>
     
@@ -44,6 +51,13 @@
   </url>
   
   <url>
+    <loc>http://www.jerrylou.me/%E5%85%B4%E8%B6%A3/rubik-cube-formulas-20140429.html</loc>
+    
+    <lastmod>2018-05-26T11:07:53.180Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.jerrylou.me/redis/redis-cache-performance-20170209.html</loc>
     
     <lastmod>2018-05-26T11:07:53.180Z</lastmod>
@@ -52,13 +66,6 @@
   
   <url>
     <loc>http://www.jerrylou.me/redis/redis-cache-intro-20170125.html</loc>
-    
-    <lastmod>2018-05-26T11:07:53.180Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.jerrylou.me/%E5%85%B4%E8%B6%A3/rubik-cube-formulas-20140429.html</loc>
     
     <lastmod>2018-05-26T11:07:53.180Z</lastmod>
     
@@ -86,7 +93,7 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/redis/redis-cache-config-20170125.html</loc>
+    <loc>http://www.jerrylou.me/redis/redis-cache-backup-20170212.html</loc>
     
     <lastmod>2018-05-26T11:07:53.178Z</lastmod>
     
@@ -100,7 +107,7 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/redis/redis-cache-backup-20170212.html</loc>
+    <loc>http://www.jerrylou.me/redis/redis-cache-config-20170125.html</loc>
     
     <lastmod>2018-05-26T11:07:53.178Z</lastmod>
     
@@ -121,7 +128,7 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/openstack/openstack-simple-intro-20161013.html</loc>
+    <loc>http://www.jerrylou.me/open-falcon/open-falcon-deploy-20160806.html</loc>
     
     <lastmod>2018-05-26T11:07:53.176Z</lastmod>
     
@@ -135,7 +142,7 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/open-falcon/open-falcon-deploy-20160806.html</loc>
+    <loc>http://www.jerrylou.me/openstack/openstack-simple-intro-20161013.html</loc>
     
     <lastmod>2018-05-26T11:07:53.176Z</lastmod>
     
@@ -156,13 +163,6 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/%E5%B7%A5%E5%85%B7/mathjax-intro-20170502.html</loc>
-    
-    <lastmod>2018-05-26T11:07:53.174Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.jerrylou.me/%E7%AC%94%E8%AE%B0/nfv-and-sdn-20160908.html</loc>
     
     <lastmod>2018-05-26T11:07:53.174Z</lastmod>
@@ -170,9 +170,9 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/im/im-system-workflow-20170705.html</loc>
+    <loc>http://www.jerrylou.me/%E5%B7%A5%E5%85%B7/mathjax-intro-20170502.html</loc>
     
-    <lastmod>2018-05-26T11:07:53.173Z</lastmod>
+    <lastmod>2018-05-26T11:07:53.174Z</lastmod>
     
   </url>
   
@@ -184,9 +184,23 @@
   </url>
   
   <url>
+    <loc>http://www.jerrylou.me/im/im-system-workflow-20170705.html</loc>
+    
+    <lastmod>2018-05-26T11:07:53.173Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.jerrylou.me/%E5%B7%A5%E5%85%B7/howto-github-travisci-coveralls-20170120.html</loc>
     
     <lastmod>2018-05-26T11:07:53.173Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.jerrylou.me/graphql/graphql-golang-fulfill-20180206.html</loc>
+    
+    <lastmod>2018-05-26T11:07:53.172Z</lastmod>
     
   </url>
   
@@ -212,13 +226,6 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/graphql/graphql-golang-fulfill-20180206.html</loc>
-    
-    <lastmod>2018-05-26T11:07:53.172Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.jerrylou.me/Golang/golang-types-in-memroy-20170314.html</loc>
     
     <lastmod>2018-05-26T11:07:53.171Z</lastmod>
@@ -233,7 +240,7 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/Golang/golang-ffjson-for-int-key-20170309.html</loc>
+    <loc>http://www.jerrylou.me/Golang/golang-defer-explain-20170324.html</loc>
     
     <lastmod>2018-05-26T11:07:53.170Z</lastmod>
     
@@ -247,7 +254,7 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/Golang/golang-defer-explain-20170324.html</loc>
+    <loc>http://www.jerrylou.me/Golang/golang-ffjson-for-int-key-20170309.html</loc>
     
     <lastmod>2018-05-26T11:07:53.170Z</lastmod>
     
@@ -268,14 +275,14 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/blockchain/ethereum-dev-env-20170505.html</loc>
+    <loc>http://www.jerrylou.me/%E5%B7%A5%E5%85%B7/git-principle-20140829.html</loc>
     
     <lastmod>2018-05-26T11:07:53.169Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/%E5%B7%A5%E5%85%B7/git-principle-20140829.html</loc>
+    <loc>http://www.jerrylou.me/blockchain/ethereum-dev-env-20170505.html</loc>
     
     <lastmod>2018-05-26T11:07:53.169Z</lastmod>
     
@@ -296,14 +303,14 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/docker/deploy-auto-platform-20161109.html</loc>
+    <loc>http://www.jerrylou.me/docker/docker-mirror-20170410.html</loc>
     
     <lastmod>2018-05-26T11:07:53.168Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/docker/docker-mirror-20170410.html</loc>
+    <loc>http://www.jerrylou.me/docker/deploy-auto-platform-20161109.html</loc>
     
     <lastmod>2018-05-26T11:07:53.168Z</lastmod>
     
@@ -359,13 +366,6 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/nosql/cassandra-install-20171204.html</loc>
-    
-    <lastmod>2018-05-26T11:07:53.166Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.jerrylou.me/nosql/cassandra-monitor-20171206.html</loc>
     
     <lastmod>2018-05-26T11:07:53.166Z</lastmod>
@@ -374,6 +374,13 @@
   
   <url>
     <loc>http://www.jerrylou.me/nosql/cassandra-golang-driver-20171219.html</loc>
+    
+    <lastmod>2018-05-26T11:07:53.166Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.jerrylou.me/nosql/cassandra-install-20171204.html</loc>
     
     <lastmod>2018-05-26T11:07:53.166Z</lastmod>
     
@@ -394,14 +401,14 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/cadvisor/cadvisor-source-code3-20160927.html</loc>
+    <loc>http://www.jerrylou.me/cadvisor/cadvisor-source-code4-20160927.html</loc>
     
     <lastmod>2018-05-26T11:07:53.165Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/cadvisor/cadvisor-source-code4-20160927.html</loc>
+    <loc>http://www.jerrylou.me/cadvisor/cadvisor-source-code3-20160927.html</loc>
     
     <lastmod>2018-05-26T11:07:53.165Z</lastmod>
     
@@ -422,14 +429,14 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/%E7%AC%94%E8%AE%B0/blockchain-post-collection-20170318.html</loc>
+    <loc>http://www.jerrylou.me/cadvisor/cadvisor-source-code-metrics-20160927.html</loc>
     
     <lastmod>2018-05-26T11:07:53.161Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/cadvisor/cadvisor-source-code-metrics-20160927.html</loc>
+    <loc>http://www.jerrylou.me/%E7%AC%94%E8%AE%B0/blockchain-post-collection-20170318.html</loc>
     
     <lastmod>2018-05-26T11:07:53.161Z</lastmod>
     
