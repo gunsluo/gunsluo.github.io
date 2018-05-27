@@ -99,8 +99,8 @@
       <tags>
         <tag>golang</tag>
         <tag>cassandra</tag>
-        <tag>driver</tag>
         <tag>nosql</tag>
+        <tag>driver</tag>
       </tags>
   </entry>
   <entry>
@@ -153,8 +153,8 @@
       </categories>
       <tags>
         <tag>cassandra</tag>
-        <tag>nosql</tag>
         <tag>data model</tag>
+        <tag>nosql</tag>
       </tags>
   </entry>
   <entry>
@@ -406,8 +406,8 @@
       </categories>
       <tags>
         <tag>golang</tag>
-        <tag>debugger</tag>
         <tag>mac</tag>
+        <tag>debugger</tag>
         <tag>gdb</tag>
       </tags>
   </entry>
@@ -433,9 +433,9 @@
         <category>笔记</category>
       </categories>
       <tags>
+        <tag>分布式</tag>
         <tag>一致性哈希</tag>
         <tag>hash</tag>
-        <tag>分布式</tag>
       </tags>
   </entry>
   <entry>
@@ -744,7 +744,7 @@
   <entry>
     <title><![CDATA[Centos7 Min系统 网络设备名问题]]></title>
     <url>%2Flinux%2Fcentos7-min-net-problem-20150429.html</url>
-    <content type="text"><![CDATA[下载安装min Centos7到virtual box, 启动linux后网络命令是不可用。需要系统启动选项加载网络参数。其次ifconfig常见命令也无法找到，需要手动安装net-tools。 加载网络 修改grub启动参数vim /etc/sysconfig/grub 添加net.ifnames=0 biosdevname=0, 效果如下 1234567GRUB_TIMEOUT=5GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"GRUB_DEFAULT=savedGRUB_DISABLE_SUBMENU=trueGRUB_TERMINAL_OUTPUT="console"GRUB_CMDLINE_LINUX="crashkernel=auto rd.lvm.lv=centos/root rd.lvm.lv=centos/swap rhgb quiet `net.ifnames=0 biosdevname=0`"GRUB_DISABLE_RECOVERY="true" 加载 grub2-mkconfig -o /boot/grub2/grub.cfg 修改网卡名如:网卡名en03修改成eth0 修改网络文件名mv /etc/sysconfig/network-scripts/ifcfg-en03 /etc/sysconfig/network-scripts/ifcfg-eth0 修改网络设备名vim /etc/sysconfig/network-scripts/ifcfg-eth0 1name=en03修改为name=eth0 重启systemctl reboot now 换源使用国内aliyun源，加快下载速度。 123mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backupcurl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repoyum makecache 安装网络工具yum install net-tools]]></content>
+    <content type="text"><![CDATA[下载安装min Centos7到virtual box, 启动linux后网络命令是不可用。需要系统启动选项加载网络参数。其次ifconfig常见命令也无法找到，需要手动安装net-tools。 加载网络 修改grub启动参数vim /etc/sysconfig/grub 添加net.ifnames=0 biosdevname=0, 效果如下 1234567GRUB_TIMEOUT=5GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"GRUB_DEFAULT=savedGRUB_DISABLE_SUBMENU=trueGRUB_TERMINAL_OUTPUT="console"GRUB_CMDLINE_LINUX="crashkernel=auto rd.lvm.lv=centos/root rd.lvm.lv=centos/swap rhgb quiet net.ifnames=0 biosdevname=0"GRUB_DISABLE_RECOVERY="true" 加载 grub2-mkconfig -o /boot/grub2/grub.cfg 修改网卡名如:网卡名en03修改成eth0 修改网络文件名mv /etc/sysconfig/network-scripts/ifcfg-en03 /etc/sysconfig/network-scripts/ifcfg-eth0 修改网络设备名vim /etc/sysconfig/network-scripts/ifcfg-eth0 1name=en03修改为name=eth0 重启systemctl reboot now 换源使用国内aliyun源，加快下载速度。 123mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backupcurl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repoyum makecache 安装网络工具yum install net-tools]]></content>
       <categories>
         <category>linux</category>
       </categories>
@@ -765,8 +765,8 @@
       <tags>
         <tag>docker</tag>
         <tag>linux</tag>
-        <tag>分布式</tag>
         <tag>容器</tag>
+        <tag>分布式</tag>
       </tags>
   </entry>
   <entry>
