@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[在Centos7上安装Kubernetes]]></title>
+    <url>%2Fk8s%2Fk8s-install-on-centos7-20180609.html</url>
+    <content type="text"><![CDATA[使用KubeAdm官方工具在Centos7上安装kubernetes. 安装环境OS: Centos7K8s Version: v1.10.4 环境配置更新系统1$ yum update -y 时区1$ timedatectl set-timezone Asia/Shanghai 配置Hosts1234$ cat /etc/hosts10.0.100.2 k8smaster10.0.100.3 k8snode0110.0.100.4 k8snode02 关闭防火墙123$ systemctl disable firewalld$ systemctl stop firewalld$ systemctl status firewalld 关闭内存交换分区12345$ swapoff -a# 永久$ cat /etc/fstab#/dev/mapper/centos-swap swap swap defaults 0 0 禁用SELINUX123$ setenforce 0$ cat /etc/selinux/configSELINUX=disabled 配置网络1234567$ cat &lt;&lt;EOF &gt; /etc/sysctl.d/k8s.confnet.bridge.bridge-nf-call-ip6tables = 1net.bridge.bridge-nf-call-iptables = 1net.ipv4.ip_forward = 1EOF$ modprobe br_netfilter$ sysctl --system 安装Docker1$ yum install -y docker 配置cgroupdriver为cgroupfs12345$ sed -i "s/native.cgroupdriver=systemd/native.cgroupdriver=cgroupfs/g" /usr/lib/systemd/system/docker.service$ cat /usr/lib/systemd/system/docker.service$ systemctl enable docker &amp;&amp; systemctl start docker$ docker info | grep Cgroup 安装kubeadm kubelet kubectl123456789101112$ cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo[kubernetes]name=Kubernetesbaseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64enabled=1gpgcheck=1repo_gpgcheck=1gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpgEOF$ yum install -y kubelet kubeadm kubectl$ systemctl enable kubelet &amp;&amp; systemctl start kubelet Note: kubelet在这里启动时不会成功的，它会定时检查重启。后面程序安装后，kubectl会启动成功。 配置kubeadm的cgroup driver为Cgroupfs12345$ sed -i "s/cgroup-driver=systemd/cgroup-driver=cgroupfs --runtime-cgroups=\/systemd\/system.slice --kubelet-cgroups=\/systemd\/system.slice/g" /etc/systemd/system/kubelet.service.d/10-kubeadm.conf$ cat /etc/systemd/system/kubelet.service.d/10-kubeadm.conf$ systemctl daemon-reload$ systemctl restart kubelet 查看kubelet日志1$ journalctl -u kubelet -f 下载镜像提前下载Dokcer镜像，如果你机器有科学上网请忽略这一步。我提前将Docker镜像下载到国内私有hub中。下面是下载脚本1234567891011121314151617181920212223242526272829303132333435363738#!/bin/bashARCH=amd64mversion=v1.10.4nversion=1.14.8username=luojipassword=passwordrepo=k8s.gcr.iostore_repo=r.xiaozhou.netstore_repo_path=r.xiaozhou.net/kubernetesimages=($&#123;repo&#125;/kube-apiserver-$&#123;ARCH&#125;:$&#123;mversion&#125; \ $&#123;repo&#125;/kube-controller-manager-$&#123;ARCH&#125;:$&#123;mversion&#125; \ $&#123;repo&#125;/kube-scheduler-$&#123;ARCH&#125;:$&#123;mversion&#125; \ $&#123;repo&#125;/kube-proxy-$&#123;ARCH&#125;:$&#123;mversion&#125; \ $&#123;repo&#125;/etcd-$&#123;ARCH&#125;:3.1.12 \ $&#123;repo&#125;/pause-$&#123;ARCH&#125;:3.1 \ $&#123;repo&#125;/k8s-dns-sidecar-$&#123;ARCH&#125;:$&#123;nversion&#125; \ $&#123;repo&#125;/k8s-dns-kube-dns-$&#123;ARCH&#125;:$&#123;nversion&#125; \ $&#123;repo&#125;/k8s-dns-dnsmasq-nanny-$&#123;ARCH&#125;:$&#123;nversion&#125; \ $&#123;repo&#125;/kubernetes-dashboard-$&#123;ARCH&#125;:v1.8.3 \ quay.io/coreos/flannel:v0.10.0-amd64 \ )docker login -u $username -p $password $store_repofor url in $&#123;images[@]&#125;do sub=$&#123;url%/*&#125; idx=$&#123;#sub&#125; image=$&#123;url:$idx+1&#125; echo -e "download -&gt; $store_repo_path/$image -&gt; $url" docker pull $store_repo_path/$image docker tag $store_repo_path/$image $url docker rmi $store_repo_path/$imagedoneunset ARCH mversion nversion images username password repo store_repo store_repo_path 上传脚本可以在这里找到：https://github.com/gunsluo/k8s-example/tree/master/version 初始化主节点$ kubeadm init –kubernetes-version v1.10.4 –service-cidr 10.96.0.0/16 –pod-network-cidr 10.244.0.0/16 –apiserver-advertise-address 10.0.100.2$ kubeadm init –config kubeadm.yaml –service-cidr 10.96.0.0/16 –pod-network-cidr 10.244.0.0/16$ cat kubeadm.yamlapiVersion: kubeadm.k8s.io/v1alpha1kind: MasterConfigurationkubernetesVersion: v1.10.4api: advertiseAddress: ‘10.0.100.2’etcd: extraArgs: ‘listen-peer-urls’: ‘http://127.0.0.1:2380‘ 123$ mkdir -p $HOME/.kube$ cp -i /etc/kubernetes/admin.conf $HOME/.kube/config$ chown $(id -u):$(id -g) $HOME/.kube/config 主节点初始化网络1$ curl -O https://raw.githubusercontent.com/coreos/flannel/v0.10.0/Documentation/kube-flannel.yml flanneld启动参数加上–iface=123456command:- /opt/bin/flanneldargs:- --ip-masq- --kube-subnet-mgr- --iface=eth1 1234$ kubectl apply -f kube-flannel.yml$ kubectl get nodes$ kubectl get pods --all-namespaces 加入工作节点1$ kubeadm join --token &lt;token&gt; &lt;master-ip&gt;:&lt;master-port&gt; --discovery-token-ca-cert-hash sha256:&lt;hash&gt; 安装Dashboard12$ curl -O https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/recommended/kubernetes-dashboard.yaml$ kubectl create -f kubernetes-dashboard.yaml]]></content>
+      <categories>
+        <category>k8s</category>
+      </categories>
+      <tags>
+        <tag>blockchain</tag>
+        <tag>kubernetes</tag>
+        <tag>k8s</tag>
+        <tag>centos</tag>
+        <tag>kubeadm</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[使用Dnsmasq在Mac上搭建私有网络开发环境]]></title>
     <url>%2F%E5%B7%A5%E5%85%B7%2Fdnsmasq-install-for-mac-20180605.html</url>
     <content type="text"><![CDATA[对于经常移动办公的童鞋，网络环境也随之改变，开发过程中部署的本地环境也需要重新配置IP地址等，或者虚拟机（使用桥接方式，桥接好处在于局域网内其它电脑方便访问，虚拟机系统访问外网不需要额外配置）时系统IP改变。我在这样的环境下痛苦针扎了一段时间，决定在本机组建一个私有网络不随连接Internet网络的改变而变动。 先说说我的想法：在电脑上模拟新的一张网卡，用此网卡组建一个网络，此网卡IP使用静态配置。如果想在同一局域网中共享该私有网络要使用dnsmasq，只是本机使用可以不使用dnsmasq。我使用的Mac电脑，由于mac不支持创建虚拟网卡，我只能使用虚拟IP来实现。 环境Mac: 宿主机 (通常使用wifi的网卡)CentOS7 1: 虚拟机(VMware Fusion) (双网卡 桥接模式)CentOS7 2: 虚拟机(VMware Fusion) (双网卡 桥接模式)CentOS7 3: 虚拟机(VMware Fusion) (双网卡 桥接模式) 配置宿主机网络由于Mac不支持创建虚拟网卡，使用虚拟IP。给en0网卡添加虚拟IP12sudo ifconfig en0 alias 10.0.100.1sudo ifconfig en0 -alias 10.0.100.1 linux系统命令：12ifconfig eth0:1 10.0.100.2 netmask 255.255.255.0ip addr del 10.0.100.2/24 dev eth0 配置虚拟机网络12cp /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/ifcfg-eth1uuidgen eth1 配置eth1网卡 vi /etc/sysconfig/network-scripts/ifcfg-eth1 (uuid使用uuidgen命令生成)123456789101112131415161718TYPE=EthernetPROXY_METHOD=noneBROWSER_ONLY=noBOOTPROTO=staticDEFROUTE=yesIPV4_FAILURE_FATAL=noIPV6INIT=yesIPV6_AUTOCONF=yesIPV6_DEFROUTE=yesIPV6_FAILURE_FATAL=noIPV6_ADDR_GEN_MODE=stable-privacyNAME=eth1UUID=123a9032-c938-4404-bc95-7103accbdcc3DEVICE=eth1IPADDR=10.0.100.2NETMASK=255.255.255.0GATEWAY=10.0.100.1ONBOOT=yes 其他虚拟机的IP10.0.100.3 10.0.100.4 测试网络宿主机: ping 10.0.100.2虚拟机: ping 10.0.100.1 安装dnsmasq1brew install dnsmasq 配置 vim /usr/local/etc/dnsmasq.conf123strict-orderlisten-address=10.0.100.1,127.0.0.1conf-dir=/usr/local/etc/dnsmasq.d/,*.conf 添加/usr/local/etc/dnsmasq.d/k8s.conf123address=/k8s-master.lan/10.0.100.2address=/k8s-node1.lan/10.0.100.3address=/k8s-node2.lan/10.0.100.4 启动:1sudo brew services start dnsmasq 开机启动1sudo launchctl start homebrew.mxcl.dnsmasq 清除DNS缓存1sudo killall -HUP mDNSResponder 如果使用该dns服务，修改dnsvi /etc/rsyslog.conf1nameserver 10.0.100.1 测试宿主机中修改/etc/rsyslog.confping k8s-master.lan]]></content>
@@ -82,9 +97,9 @@
         <category>openstack</category>
       </categories>
       <tags>
+        <tag>虚拟化</tag>
         <tag>openstack</tag>
         <tag>云计算</tag>
-        <tag>虚拟化</tag>
         <tag>centos7.2</tag>
         <tag>ocata</tag>
       </tags>
@@ -606,9 +621,9 @@
       </categories>
       <tags>
         <tag>centos7</tag>
+        <tag>虚拟化</tag>
         <tag>openstack</tag>
         <tag>云计算</tag>
-        <tag>虚拟化</tag>
         <tag>newton</tag>
       </tags>
   </entry>
@@ -621,9 +636,9 @@
       </categories>
       <tags>
         <tag>linux</tag>
+        <tag>虚拟化</tag>
         <tag>openstack</tag>
         <tag>云计算</tag>
-        <tag>虚拟化</tag>
       </tags>
   </entry>
   <entry>
