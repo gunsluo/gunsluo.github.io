@@ -4,7 +4,7 @@
   <url>
     <loc>http://www.jerrylou.me/k8s/vagrant-k8s-20180729.html</loc>
     
-    <lastmod>2018-07-29T11:18:15.292Z</lastmod>
+    <lastmod>2018-07-31T02:56:36.809Z</lastmod>
     
   </url>
   
@@ -16,14 +16,7 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/redis/redis-cache-backup-20170212.html</loc>
-    
-    <lastmod>2018-06-29T10:03:09.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.jerrylou.me/nosql/cassandra-data-model-20171205.html</loc>
+    <loc>http://www.jerrylou.me/openstack/opentstack-o-deploy-20180131.html</loc>
     
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     
@@ -37,14 +30,7 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/nosql/cassandra-install-20171204.html</loc>
-    
-    <lastmod>2018-06-29T10:03:09.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.jerrylou.me/nosql/cassandra-monitor-20171206.html</loc>
+    <loc>http://www.jerrylou.me/nosql/cassandra-data-model-20171205.html</loc>
     
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     
@@ -52,6 +38,13 @@
   
   <url>
     <loc>http://www.jerrylou.me/nosql/cassandra-mx4j-20171213.html</loc>
+    
+    <lastmod>2018-06-29T10:03:09.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.jerrylou.me/nosql/cassandra-monitor-20171206.html</loc>
     
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     
@@ -72,14 +65,21 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/linux/centos7-min-net-problem-20150429.html</loc>
+    <loc>http://www.jerrylou.me/%E7%AC%94%E8%AE%B0/deluge-install-ubuntu-20170218.html</loc>
     
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/%E7%AC%94%E8%AE%B0/deluge-install-ubuntu-20170218.html</loc>
+    <loc>http://www.jerrylou.me/nosql/cassandra-install-20171204.html</loc>
+    
+    <lastmod>2018-06-29T10:03:09.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.jerrylou.me/linux/centos7-min-net-problem-20150429.html</loc>
     
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     
@@ -191,14 +191,14 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/%E7%94%B5%E8%84%91%E7%A1%AC%E4%BB%B6/hackintosh-window-install-20130429.html</loc>
+    <loc>http://www.jerrylou.me/%E7%94%B5%E8%84%91%E7%A1%AC%E4%BB%B6/hackintosh-to-high-sierra-20180212.html</loc>
     
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/%E7%94%B5%E8%84%91%E7%A1%AC%E4%BB%B6/hackintosh-to-high-sierra-20180212.html</loc>
+    <loc>http://www.jerrylou.me/%E7%94%B5%E8%84%91%E7%A1%AC%E4%BB%B6/hackintosh-window-install-20130429.html</loc>
     
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     
@@ -219,14 +219,14 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/%E7%AC%94%E8%AE%B0/blockchain-post-collection-20170318.html</loc>
+    <loc>http://www.jerrylou.me/nosql/nosql-compare-20171106.html</loc>
     
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/nosql/nosql-compare-20171106.html</loc>
+    <loc>http://www.jerrylou.me/%E7%AC%94%E8%AE%B0/blockchain-post-collection-20170318.html</loc>
     
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     
@@ -247,7 +247,7 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/openstack/opentstack-o-deploy-20180131.html</loc>
+    <loc>http://www.jerrylou.me/redis/redis-cache-backup-20170212.html</loc>
     
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     
@@ -255,13 +255,6 @@
   
   <url>
     <loc>http://www.jerrylou.me/redis/redis-cache-deploy-20170125.html</loc>
-    
-    <lastmod>2018-06-29T10:03:09.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.jerrylou.me/redis/redis-cache-intro-20170125.html</loc>
     
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     
@@ -317,6 +310,13 @@
   </url>
   
   <url>
+    <loc>http://www.jerrylou.me/video/jitsi-auth-20180507.html</loc>
+    
+    <lastmod>2018-06-29T10:03:09.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.jerrylou.me/im/im-system-workflow-20170705.html</loc>
     
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
@@ -325,13 +325,6 @@
   
   <url>
     <loc>http://www.jerrylou.me/video/jitsi-install-20180426.html</loc>
-    
-    <lastmod>2018-06-29T10:03:09.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.jerrylou.me/video/jitsi-auth-20180507.html</loc>
     
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     
@@ -359,7 +352,7 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/%E5%85%B4%E8%B6%A3/rubik-cube-formulas-20140429.html</loc>
+    <loc>http://www.jerrylou.me/redis/redis-cache-intro-20170125.html</loc>
     
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     
@@ -367,6 +360,13 @@
   
   <url>
     <loc>http://www.jerrylou.me/%E7%AC%94%E8%AE%B0/rrd-intro-20170408.html</loc>
+    
+    <lastmod>2018-06-29T10:03:09.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.jerrylou.me/%E5%85%B4%E8%B6%A3/rubik-cube-formulas-20140429.html</loc>
     
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     
@@ -394,14 +394,14 @@
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/%E5%B7%A5%E5%85%B7/websit-enable-https-20180623.html</loc>
+    <loc>http://www.jerrylou.me/%E7%AC%94%E8%AE%B0/use-duoshuo-20170112.html</loc>
     
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.jerrylou.me/%E7%AC%94%E8%AE%B0/use-duoshuo-20170112.html</loc>
+    <loc>http://www.jerrylou.me/%E5%B7%A5%E5%85%B7/websit-enable-https-20180623.html</loc>
     
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     

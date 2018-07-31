@@ -96,11 +96,11 @@
       </categories>
       <tags>
         <tag>mac</tag>
+        <tag>high sierra</tag>
         <tag>hackintosh</tag>
         <tag>黑苹果</tag>
         <tag>安装</tag>
         <tag>UEFI</tag>
-        <tag>high sierra</tag>
       </tags>
   </entry>
   <entry>
@@ -154,8 +154,8 @@
       <tags>
         <tag>golang</tag>
         <tag>cassandra</tag>
-        <tag>nosql</tag>
         <tag>driver</tag>
+        <tag>nosql</tag>
       </tags>
   </entry>
   <entry>
@@ -208,8 +208,8 @@
       </categories>
       <tags>
         <tag>cassandra</tag>
-        <tag>data model</tag>
         <tag>nosql</tag>
+        <tag>data model</tag>
       </tags>
   </entry>
   <entry>
@@ -896,11 +896,11 @@
       </categories>
       <tags>
         <tag>mac</tag>
-        <tag>windows</tag>
         <tag>hackintosh</tag>
         <tag>黑苹果</tag>
         <tag>安装</tag>
         <tag>UEFI</tag>
+        <tag>windows</tag>
       </tags>
   </entry>
 </search>
