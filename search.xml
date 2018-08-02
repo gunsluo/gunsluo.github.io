@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Kubernetes Ingress开启HTTPS]]></title>
+    <url>%2Fk8s%2Fk8s-enable-tls-ingress-20180802.html</url>
+    <content type="text"><![CDATA[为你的Ingress开启HTTPS支持, 使应用更加安全。Ingress支持HTTPS配置比较简单，这里使用私用证书进行配置，浏览器中会提示not secure，需要到服务商买权威的CA证书。 创建证书1234$ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout dex.key -out dex.crt -subj "/CN=dex.sso/O=dex.sso"$ cat dex.key | base64$ cat dex.crt | base64 配置Secret123456789apiVersion: v1data: tls.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUN4RENDQWF3Q0NRRENzeHpHVTI5UFl6QU5CZ2txaGtpRzl3MEJBUXNGQURBa01SQXdEZ1lEVlFRRERBZGsKWlhndWMzTnZNUkF3RGdZRFZRUUtEQWRrWlhndWMzTnZNQjRYRFRFNE1EZ3dNakEzTkRFek5sb1hEVEU1TURndwpNakEzTkRFek5sb3dKREVRTUE0R0ExVUVBd3dIWkdWNExuTnpiekVRTUE0R0ExVUVDZ3dIWkdWNExuTnpiekNDCkFTSXdEUVlKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBTDJIeDBIQytDY3Q4TjhJNDVnRk1yNXYKV1d2SUZIY1hSTDRLeUc5dW91MlRZYVhNNHRSSjU2VGtXSzhLSUFnd1RnUkFSUnJhTjFuMzZuaGFpM0xOYWxRZgpYTWhLMUo5cXI3bklLLzlvYjdYU1UxTzlOR2NSeU1ldkVTcGJ2bmh4dFkzNnVuR3hwT3hidjFsM25Oa1NkRXYyCmN6bGFWd1U1VGwwTlZsTlNkcjZ1YmRYYS85MXhOUnJDZkFwNjcydDMyaVZNMXhyNkNESW9qOHVjL3AxQmpjYkcKTDROckcwNTZBWDRBREVYWGRrMEJISzM4d29yOENpcTFMSUhNVnpwQXJhRW1FRUxSUU9SbU1wY1htRWZiNjUzcQo3RmNPejVpRjVkVVZVVzN3TXJZSjUzUzB6ZjJZc2FlQ01pRzZzMUM5Znl0QnpwNHBzRXQreWpZcEhZUGlBUlVDCkF3RUFBVEFOQmdrcWhraUc5dzBCQVFzRkFBT0NBUUVBbmdSR0JrWjlhRGV5YjJ0YityMjJJK1N0ZlNHMzdEWFoKS3EzSnlyTTdjeUlacGRmRjBKdTlJWHA0Z1IwUFVhQzR1K2V6NG8vc0ZDaGtNcW5QUE93cTJrOTlPRXFSOTVrSgoydllDQ0ZnNVk4VklFTnNwdHpJQlZDdFBjRnlabnNiTENDMUFuRGVvZCt3aUJ3THhLWU1MN0oyeTNXd2RPZFp3ClJiWlBKT1NsL0FCZmdMV2kxMExQWTBUSmdjRXp3QU9VTUh2SnpXUXNzY2pTU0Z4clFHWXcyVDRFN1lvV3puWXEKYy9BTVA1NGhYbkhpWUp6QmZCR0hGMDErVm1KbExRK2VvcDJpSVBqdUc1OGdBdWlXMk5DTGtTdHNSRzREZ0VpdApWRUo0MVZETHp3UkZHbkNIb1FnZWt5YmJVZ0twb1VHMDYwTDBBcnZzZVlWTmFjWk5lNDVRQ0E9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg== tls.key: LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JSUV2QUlCQURBTkJna3Foa2lHOXcwQkFRRUZBQVNDQktZd2dnU2lBZ0VBQW9JQkFRQzloOGRCd3ZnbkxmRGYKQ09PWUJUSytiMWxyeUJSM0YwUytDc2h2YnFMdGsyR2x6T0xVU2VlazVGaXZDaUFJTUU0RVFFVWEyamRaOStwNApXb3R5eldwVUgxeklTdFNmYXErNXlDdi9hRysxMGxOVHZUUm5FY2pIcnhFcVc3NTRjYldOK3JweHNhVHNXNzlaCmQ1elpFblJMOW5NNVdsY0ZPVTVkRFZaVFVuYStybTNWMnYvZGNUVWF3bndLZXU5cmQ5b2xUTmNhK2dneUtJL0wKblA2ZFFZM0d4aStEYXh0T2VnRitBQXhGMTNaTkFSeXQvTUtLL0FvcXRTeUJ6RmM2UUsyaEpoQkMwVURrWmpLWApGNWhIMit1ZDZ1eFhEcytZaGVYVkZWRnQ4REsyQ2VkMHRNMzltTEduZ2pJaHVyTlF2WDhyUWM2ZUtiQkxmc28yCktSMkQ0Z0VWQWdNQkFBRUNnZ0VBZWZ1ZG54R2hMWFpBQlF4dmp6UXBTSy9aMmFqWW94MXl2TzJydXl4MTZIcG0KNnBOSG1tSkdtTFh1N2htU0xETUt3Mm1xRUhKS0ZibWVTdi9icUhQVTczZVArOGxOdDV5dXBOL1VrWG5pREIvbQpTWXNJNHgxcklEbm96bDVsNUpjcXhzcU1uUWc4b1hNYllMVy9XV2FyT3dqUGVDWlF3NmZ5YTZsZDJockZHa3VGCldESTM3dGtqdjJJNHJRdW1IZFk0VUoyUzNOL3JlL2NnUkZVVDBhbXpabVN5T0V6WmloMHU5U28xK2w0R0ZtQTgKeGNHTjVCZUIxMzBzdlp3UExRRXJxdXJiTFFwN3Yzd2Fkb2phOGJzVGFHd1hyNFlMWWpXVnhFVWhZcHZXZFhBRwpLK05jNU9xMlFaanRSa29kVEltNXFjQUpSSU5mU1JIYkhQUWdTNHFGQVFLQmdRRHNwM3ZqZWRuOHJDOHI2cWJ2CldiYzlPeDREOVJRVUVvSll4MlpBSFZObEhtdU5YNk9WaG1XaDFibkdDbDN6T2ZJQU11bm1GZ2Uwc24zTVF2aVYKbU5aWEg3YVRpLytyYXNPUVdSajZiSHNDWEEyR0ZCV3A2QlJCbjdRbHdxaGFEblpYYnR6bHZ0aXJqZnJsTUhoTgp2RGtLT3pxcFN1bjdSaTcraWpsZDk4SU1oUUtCZ1FETkJoK0JMaWFWaDl3cTZZc0JNNHMzQ0JyWkd2VHVKdmNPClBBcm1MUVB6K2VaTGNOMDlQNXBCR2t2S1dBQUEyY2FUdDRKUmp3VHpxZjFzOHhwR3FWb1JmRjdlZWxXMzQwb1AKVFdQcVNndHpGSkV4and2cmZ2WXhpWlFlSmY0MVBTNFFMbUJqSWhUYU5JZUdvUTFhc0NCTkdqWDdYeEZkSElOMApxNkFpL05OUFVRS0JnRTRrWDN3VldDMWVqWlRxdm9SNkUwOWNuZVNnb0NpZ2svbk1uYTYrQURON2YvZ0doSFZ6CkUwd0V6bnJlSVhlV3dwbmVOZTJMaUsvWjRELzZQU3JvZEo0QUVzRlZrTzZCS21JWGlXL25NaGJ0WG1uUFovZmEKY2hYWkxocnAwNzBvMlZxMWVLdEVBVGRrZ2x2N1RUNGQwSmZZUnQ1dnBpTWFZWm9hK2laVkVQWWhBb0dBSHVGUQpOM1hMQy9TbG5iVUZZYzN3cHY1S2hPN0JlMmxWQnNqV1gycmlVSW9RUE1hb0hBU0xhRWpjcDRKdnBiRW5ickpTCko1U2lDMDFNUlcrc1FuNVplWTdBLzBOdnk3MnBOdnJTRk1USVNySUxXR3FTUWdzaWE3MnNHSXBpYW9SbmZycHQKZkNEekFSYXVYd0c4OEM3Yy9wLzNCNEIvTGdZUWFxODY5R29lTGJFQ2dZQVB5NU1heXVTRUFEaTdyZHVJcVArZgp4amw5elhwMGpZa2RtOCtmNVhhdGlIaFl6STBzaHdsZHBXcU85R1NoR2VMVi9Md2d1bVFhQlRCa3Bta0JSOFlGCkQzbmhCQ0hjaDVIeEd0UkVzWnlRUjJtNXhhRGhVL2NYc3ZFVjBBcmRUeVl3S0VlTStlSnVXYTl1THdQM2VKeEMKbFFXSXNUbm9EQUpzWUE4NFJST2dMdz09Ci0tLS0tRU5EIFBSSVZBVEUgS0VZLS0tLS0Kkind: Secretmetadata: name: sso-secret namespace: ssotype: Opaque 配置Ingress12345678910111213141516apiVersion: extensions/v1beta1kind: Ingressmetadata: name: dex namespace: ssospec: tls: - secretName: sso-secret rules: - host: dex.sso http: paths: - backend: serviceName: dex servicePort: 80 path: / Okay，配置完成。]]></content>
+      <categories>
+        <category>k8s</category>
+      </categories>
+      <tags>
+        <tag>kubernetes</tag>
+        <tag>k8s</tag>
+        <tag>ingress</tag>
+        <tag>https</tag>
+        <tag>tls</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[部署数据库Portgres到Kubernetes]]></title>
     <url>%2Fk8s%2Fk8s-install-portgres-20180802.html</url>
     <content type="text"><![CDATA[之前我们已成功安装了kubernetes，现在可以部署我们的应用服务。我们在安装ingres前先部署Portgres数据库，数据库被要求不能被外网访问并且大多数应用服务都会依赖数据库。这里需要注意的一点是数据库的数据不能丢失，所有我们需要使用持久化卷(persistent volumes)。 创建Namespace编写00-namespace.yaml123456apiVersion: v1kind: Namespacemetadata: name: db labels: name: db 运行命令创建 kubectl create -f 00-namespace.yaml 创建PV/PVC编写01-postgres-pv.yaml123456789101112131415161718192021222324apiVersion: v1kind: PersistentVolumemetadata: name: db-postgres-pv namespace: dbspec: capacity: storage: 5Gi # volumeMode field requires BlockVolume Alpha feature gate to be enabled. volumeMode: Filesystem accessModes: - ReadWriteOnce persistentVolumeReclaimPolicy: Delete storageClassName: local-storage local: path: /data nodeAffinity: required: nodeSelectorTerms: - matchExpressions: - key: kubernetes.io/hostname operator: In values: - node01 kubernetes支持多种PV，由于我本机没有额外的存储服务(nfs service/cefs …)，所以我选择使用local方式，也就是storageClassName: local-storage。这种方式需要指定节点和挂载目录，并需要提前将目录准备好。如上例子中被指定到node01接点的/data目录。 运行命令创建 kubectl create -f 01-postgres-pv.yaml 创建后可使用kubectl get pv -n db查看123# kubectl get pv -n dbNAME CAPACITY ACCESS MODES RECLAIM POLICY STATUS CLAIM STORAGECLASS REASON AGEdb-postgres-pv 5Gi RWO Delete Bound local-storage 1d 编写02-postgres-pvc.yaml12345678910111213apiVersion: v1kind: PersistentVolumeClaimmetadata: name: db-postgres-pvc-postgres-0 namespace: dbspec: accessModes: - ReadWriteOnce volumeMode: Filesystem resources: requests: storage: 5Gi storageClassName: local-storage 注意：pvc的命名是有一定规则的，否则就无法将PV与PVC关系起来，关联成功后PV的CLAIM值是对应的namespace/PVC名称。 运行命令创建 kubectl create -f 02-postgres-pvc.yaml 创建后可使用kubectl get pvc -n db查看1234567# kubectl get pv -n dbNAME CAPACITY ACCESS MODES RECLAIM POLICY STATUS CLAIM STORAGECLASS REASON AGEdb-postgres-pv 5Gi RWO Delete Bound db/db-postgres-pvc-postgres-0 local-storage 1d# kubectl get pvc -n dbNAME STATUS VOLUME CAPACITY ACCESS MODES STORAGECLASS AGEdb-postgres-pvc-postgres-0 Bound db-postgres-pv 5Gi RWO local-storage 1d 创建Portgres服务编写03-postgres-statefulset.yaml1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859apiVersion: v1kind: Servicemetadata: name: postgres namespace: db labels: svc: postgresspec: ports: - port: 5432 targetPort: 5432 protocol: TCP name: postgres selector: svc: postgres---apiVersion: apps/v1kind: StatefulSetmetadata: name: postgres namespace: dbspec: selector: matchLabels: svc: postgres # has to match .spec.template.metadata.labels serviceName: "postgres" replicas: 1 # by default is 1 template: metadata: labels: svc: postgres # has to match .spec.selector.matchLabels spec: terminationGracePeriodSeconds: 10 containers: - name: postgres image: postgres:10.3-alpine env: - name: POSTGRES_USER value: "postgres" - name: POSTGRES_PASSWORD value: "password" - name: PGDATA value: "/var/lib/postgresql/data" ports: - containerPort: 5432 name: postgres protocol: TCP volumeMounts: - name: db-postgres-pvc mountPath: /var/lib/postgresql/data volumeClaimTemplates: - metadata: name: db-postgres-pvc spec: accessModes: [ "ReadWriteOnce" ] storageClassName: "local-storage" resources: requests: storage: 5Gi 创建了集群内部访问的Service, 使用StatefulSet创建带状态的服务类型，服务使用了本地PV，Portgres服务只会在node01节点运行。参数replicas: 1指定副本数，这里设置1就好，如果想达到多副本，使用数据库本身的集群方式搭建。 运行命令创建 kubectl create -f 03-postgres-statefulset.yaml OK, 我们登陆UI界面查看服务运行状况。 访问PortgresPortgres的Service类型只能在集群内部访问，访问方式：postgres.db:5432 (service.namespace:port)。如果想外部访问你可以修改service类型或使用Ingress实现，但这里我们不想外部能访问到数据库。 不过这里可以使用proxy临时访问到集群内部服务：kubectl port-forward postgres-0 -n db 5434:5432]]></content>
@@ -37,8 +52,8 @@
         <category>工具</category>
       </categories>
       <tags>
-        <tag>ssl</tag>
         <tag>https</tag>
+        <tag>ssl</tag>
         <tag>websit</tag>
         <tag>let&#39;s encrypt</tag>
       </tags>
@@ -139,11 +154,11 @@
         <category>openstack</category>
       </categories>
       <tags>
+        <tag>虚拟化</tag>
         <tag>openstack</tag>
+        <tag>云计算</tag>
         <tag>centos7.2</tag>
         <tag>ocata</tag>
-        <tag>云计算</tag>
-        <tag>虚拟化</tag>
       </tags>
   </entry>
   <entry>
@@ -663,9 +678,9 @@
       </categories>
       <tags>
         <tag>centos7</tag>
+        <tag>虚拟化</tag>
         <tag>openstack</tag>
         <tag>云计算</tag>
-        <tag>虚拟化</tag>
         <tag>newton</tag>
       </tags>
   </entry>
@@ -678,9 +693,9 @@
       </categories>
       <tags>
         <tag>linux</tag>
+        <tag>虚拟化</tag>
         <tag>openstack</tag>
         <tag>云计算</tag>
-        <tag>虚拟化</tag>
       </tags>
   </entry>
   <entry>
