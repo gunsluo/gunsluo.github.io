@@ -1,0 +1,319 @@
+<!DOCTYPE html><html class="theme-next pisces use-motion" lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css"><link rel="apple-touch-icon" sizes="180x180" href="/favicon.ico?v=6.0.4"><link rel="icon" type="image/png" sizes="32x32" href="/favicon.ico?v=6.0.4"><link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico?v=6.0.4"><link rel="mask-icon" href="/favicon.ico?v=6.0.4" color="#222"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Pisces",version:"6.0.4",sidebar:{position:"left",display:"post",offset:12,b2t:!1,scrollpercent:!1,onmobile:!1},fancybox:!1,fastclick:!1,lazyload:!1,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><meta name="keywords" content="glb,load balance,负载均衡,"><meta name="description" content="在GitHub，我们在网络边缘的metal cloud上每秒处理数万个请求。 我们之前文章已经介绍过GLB，这是我们针对裸机数据中心的可扩展负载均衡解决方案，它支持大多数GitHub的对外服务，并且还为我们最关键的内部系统提供负载均衡服务，例如高可用MySQL集群。 今天，我们很高兴能够分享有关负载均衡器设计的更多细节，并将GLB Director开源。 GLB Director是4层负载均衡器，"><meta name="keywords" content="glb,load balance,负载均衡"><meta property="og:type" content="article"><meta property="og:title" content="（转）重磅！GitHub发布开源负载均衡组件GLB"><meta property="og:url" content="http://www.jerrylou.me/笔记/github-glb-20180811.html"><meta property="og:site_name" content="Jerrylou&#39;s Notes"><meta property="og:description" content="在GitHub，我们在网络边缘的metal cloud上每秒处理数万个请求。 我们之前文章已经介绍过GLB，这是我们针对裸机数据中心的可扩展负载均衡解决方案，它支持大多数GitHub的对外服务，并且还为我们最关键的内部系统提供负载均衡服务，例如高可用MySQL集群。 今天，我们很高兴能够分享有关负载均衡器设计的更多细节，并将GLB Director开源。 GLB Director是4层负载均衡器，"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZd2IjeZdtqmgrsZia3K5CPrq3icEwkd4jVU85uufdXkZwZdibEA7icpoictMQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1"><meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdmLVyvuAUupqs8Gbf0dwxcHTl3gyAVZVpuALtLIiaZC9KdtoghWqFRhw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1"><meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdicen9VI56FxQEf4jXyLU7qwJnjKMAPrPmlC2bXeTw9nCo1KNmOtnNMA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1"><meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdRtYAa2ysrvTziaBlqMzFlavRb2xfLdAiaoxD786TFk1JhUWeUL4KS0sg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1"><meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdQiaeGRyWuHibYgJbGAhH2VibNxWfu8FCD0PBLWUFBzWOzLPlyrLlCBBFA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1"><meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdrEIysIleo6MNNmfxPzyKEibgJmrjYLFRZRhDiaLbjgPaQnBeiba6YhrcQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1"><meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdDQeeGlEozAyCwWWwjWOiaogx3UhGdHdLEQhkX9PMqnPzJPaSGZ5tgWA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1"><meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdIv6jeJj0RY41TThm4MicQIsKBXDeCl3Iub7BV2W7kXWzEF8xbmEezpA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1"><meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdsK7PiakWcNibeNwgnOmWMhzVjE0v4WElwCeps9O98rNB2sTUfklRL92w/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1"><meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdzo04W2RgzsXj9ibcBcDY7HPdsyfCpTClBp82NeRXBddGzaQYltutMiaw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1"><meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdyRGuMK96tUs7ZiaMI5QrTj62ZeLdtwMXxlzsiavLY5sP2b3JEP24fwXQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1"><meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdylHx6KX5TG4P1pxkicblboWwU5MFiaUeMpAnWiapYdkdS4ma89e8VyyCg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1"><meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdkwyxSS9q2EZD6ydAKbNP9NLpa7qQAsEd5ibIEujgnX3MHqbjZog6tibw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1"><meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdIiap8ptGqGhRtLT33vhuwAQBe35aA22YWckHfchTqtbIYu8kdmH0CbA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1"><meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdzIWvLwmB999nbRlAHvoiaePDJ0iaZoQVsZZoNwqHcgQLOLpmnkGicUzTA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1"><meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdfAQtrxH1X3ibmBmRAIaKr2gpgkZiaWVbwCf5KNYsQE6D0wDjul3mFeIw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1"><meta property="og:updated_time" content="2018-08-11T13:03:47.964Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="（转）重磅！GitHub发布开源负载均衡组件GLB"><meta name="twitter:description" content="在GitHub，我们在网络边缘的metal cloud上每秒处理数万个请求。 我们之前文章已经介绍过GLB，这是我们针对裸机数据中心的可扩展负载均衡解决方案，它支持大多数GitHub的对外服务，并且还为我们最关键的内部系统提供负载均衡服务，例如高可用MySQL集群。 今天，我们很高兴能够分享有关负载均衡器设计的更多细节，并将GLB Director开源。 GLB Director是4层负载均衡器，"><meta name="twitter:image" content="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZd2IjeZdtqmgrsZia3K5CPrq3icEwkd4jVU85uufdXkZwZdibEA7icpoictMQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1"><link rel="alternate" href="/atom.xml" title="Jerrylou's Notes" type="application/atom+xml"><link rel="canonical" href="http://www.jerrylou.me/笔记/github-glb-20180811.html"><script type="text/javascript" id="page.configurations">CONFIG.page={sidebar:""}</script><title>（转）重磅！GitHub发布开源负载均衡组件GLB | Jerrylou's Notes</title><noscript><style type="text/css">.sidebar-inner,.use-motion .brand,.use-motion .collection-title,.use-motion .comments,.use-motion .menu-item,.use-motion .motion-element,.use-motion .pagination,.use-motion .post-block,.use-motion .post-body,.use-motion .post-header{opacity:initial}.use-motion .logo,.use-motion .site-subtitle,.use-motion .site-title{opacity:initial;top:initial}.logo-line-after i{right:initial}</style></noscript></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN"><div class="container sidebar-position-left page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">Jerrylou's Notes</span><span class="logo-line-after"><i></i></span></a></div><h1 class="site-subtitle" itemprop="description">labor for reward</h1></div><div class="site-nav-toggle"> <button><span class="btn-bar"></span><span class="btn-bar"></span><span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br>首页</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i><br>分类</a></li><li class="menu-item menu-item-about"><a href="/resume.html" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br>关于</a></li><li class="menu-item menu-item-archives"><a href="/archives" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i><br>归档</a></li><li class="menu-item menu-item-tags"><a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br>标签</a></li><li class="menu-item menu-item-search"><a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i><br>搜索</a></li></ul><div class="site-search"><div class="popup search-popup local-search-popup"><div class="local-search-header clearfix"><span class="search-icon"><i class="fa fa-search"></i></span><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span><div class="local-search-input-wrapper"> <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input"></div></div><div id="local-search-result"></div></div></div></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://www.jerrylou.me/笔记/github-glb-20180811.html"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="luoji"><meta itemprop="description" content=""><meta itemprop="image" content="/images/avatar.jpg"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="Jerrylou's Notes"></span><header class="post-header"><h2 class="post-title" itemprop="name headline">（转）重磅！GitHub发布开源负载均衡组件GLB</h2><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i></span> <span class="post-meta-item-text">发表于</span> <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-11T20:44:59+08:00">2018-08-11</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-folder-o"></i></span> <span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/笔记/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span></span> <span class="post-comments-count"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-comment-o"></i></span><a href="/笔记/github-glb-20180811.html#comments" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="笔记/github-glb-20180811.html" itemprop="commentCount"></span></a></span> <span id="/笔记/github-glb-20180811.html" class="leancloud_visitors" data-flag-title="（转）重磅！GitHub发布开源负载均衡组件GLB"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-eye"></i></span> <span class="post-meta-item-text">阅读次数&#58;</span><span class="leancloud-visitors-count"></span></span></div></header><div class="post-body" itemprop="articleBody"><p>在GitHub，我们在网络边缘的metal cloud上每秒处理数万个请求。 我们之前文章已经介绍过GLB，这是我们针对裸机数据中心的可扩展负载均衡解决方案，它支持大多数GitHub的对外服务，并且还为我们最关键的内部系统提供负载均衡服务，例如高可用MySQL集群。 今天，我们很高兴能够分享有关负载均衡器设计的更多细节，并将GLB Director开源。</p><p>GLB Director是4层负载均衡器，可在大量物理机器上扩展单个IP地址，同时尝试在修改期间最大限度地减少连接中断。 GLB Director不会替换像haproxy和nginx这样的服务，而是部署在这些服务（或任何TCP服务）之前，允许它们跨多个物理机器扩展，而不需要每台机器都有唯一的IP地址。</p><a id="more"></a><h3 id="使用ECMP扩展IP"><a href="#使用ECMP扩展IP" class="headerlink" title="使用ECMP扩展IP"></a>使用ECMP扩展IP</h3><p>4层负载均衡器的基本属性是能够使用单个IP地址在多个服务器之间实现均衡连接。 为了扩展单个IP以处理更多的流量，我们不仅需要在后端服务器之间进行流量拆分，还需要能够扩展负载均衡器本身。 这实际上是另一层负载均衡。</p><p>通常，我们将IP地址视为单个物理机器，将路由器视为将数据包移动到下一个最近路由器的机器。 在最简单的情况下，总是有一个最佳的下一跳，路由器选择该跳并转发所有数据包直到达到目的地。</p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZd2IjeZdtqmgrsZia3K5CPrq3icEwkd4jVU85uufdXkZwZdibEA7icpoictMQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="Alt text"></p><p>实际上，大多数网络都要复杂得多。 两台计算机之间通常有多条路径可用，例如，使用多个ISP或者两台路由器通过多条物理电缆连接在一起以增加容量并提供冗余。 这是等价多路径（ECMP）路由发挥作用的地方 - 而不是由路由器选择单个最佳下一跳，ECMP中很多路径具有相同成本（通常定义为到目的地的AS的数量）， 路由器分散流量以便在所有可用的相同成本路径之间均衡连接。</p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdmLVyvuAUupqs8Gbf0dwxcHTl3gyAVZVpuALtLIiaZC9KdtoghWqFRhw/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="Alt text"></p><p>ECMP通过对每个数据包进行hash以确定其中一个可用路径。此处使用的hash函数因设备而异，但通常是基于源和目标IP地址以及TCP流量的源和目标端口的一致性hash。这意味着同一个TCP连接的多个数据包通常会遍历相同的路径，这意味着即使路径具有不同的延迟，数据包也会以相同的顺序到达。值得注意的是，在这种情况下，路径可以在不中断连接的情况下进行更改，因为它们总是最终位于同一个目标服务器上，此时它所采用的路径大多无关紧要。</p><p>ECMP的另一种用法是当我们想要跨多个服务器而不是跨多个路径上的同一服务器时。每个服务器都可以使用BGP或其他类似的网络协议使用相同的IP地址，从而使连接在这些服务器之间进行分片，路由器不知道连接是在不同的地方处理的，而非传统做法那样所有的连接都同一台机器上处理。</p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdicen9VI56FxQEf4jXyLU7qwJnjKMAPrPmlC2bXeTw9nCo1KNmOtnNMA/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="Alt text"></p><p>虽然ECMP会像对流量进行分片，但它有一个巨大的缺点：当相同IP的服务器更改（或沿途的任何路径或路由器发生变化）时，连接必须重新均衡，才能保证每个服务器上的连接比较均衡。 路由器通常是无状态设备，只是为每个数据包做出最佳决策而不考虑它所属的连接，这意味着在这种情况下某些连接会中断。</p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdRtYAa2ysrvTziaBlqMzFlavRb2xfLdAiaoxD786TFk1JhUWeUL4KS0sg/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="Alt text"></p><p>在上面的例子中，我们可以想象每种颜色代表一个活动的连接。 添加新的代理服务器使用相同的IP。 路由器保证一致性哈希，将1/3连接移动到新服务器，同时保持2/3连接在老服务器上。 不幸的是，对于进行中的1/3连接，数据包现在到达了无连接状态的服务器，因此连接会失败。</p><h3 id="将director-proxy分离"><a href="#将director-proxy分离" class="headerlink" title="将director/proxy分离"></a>将director/proxy分离</h3><p>以前仅使用ECMP的解决方案的问题在于它不知道给定数据包的完整上下文，也不能为每个数据包/连接存储数据。事实证明，通常使用Linux Virtual Server（LVS）等工具。我们创建了一个新的“director”服务器层，它通过ECMP从路由器获取数据包，但不是依靠路由器的ECMP hash来选择后端代理服务器，而是对所有链接控制hash和存储状态（选择后端）。当我们更改代理层服务器时，director层有望不变，我们的连接也不会断掉。</p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdQiaeGRyWuHibYgJbGAhH2VibNxWfu8FCD0PBLWUFBzWOzLPlyrLlCBBFA/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="Alt text"></p><p>虽然这在许多情况下效果很好，但它确实有一些缺点。在上面的示例中，我们同时添加了LVS director和后端代理服务器。新的director接收到一些数据包，但是还没有任何状态（或者具有延迟状态），因此将其作为新连接进行hash处理并可能使其出错（并导致连接失败）。 LVS的典型解决方法是使用多播连接同步来保持所有LVS director服务器之间共享的连接状态。这仍然需要传播连接状态，并且仍然需要重复状态 - 不仅每个代理都需要Linux内核网络堆栈中每个连接的状态，而且每个LVS director还需要存储连接到后端代理服务器的映射。</p><h3 id="将所有状态从director层移除"><a href="#将所有状态从director层移除" class="headerlink" title="将所有状态从director层移除"></a>将所有状态从director层移除</h3><p>当我们设计GLB时，我们决定要改善这种情况而不是重复状态。 通过使用已存储在代理服务器中的流状态作为维护来自客户端的已建立Linux TCP连接的一部分，GLB采用与上述方法不同的方法。</p><p>对于每个进入的连接，我们选择可以处理该连接的主服务器和辅助服务器。 当数据包到达主服务器且无效时，会将数据包转发到辅助服务器。 选择主/辅助服务器的散列是预先完成一次，并存储在查找表中，因此不需要在每个流或每个数据包的基础上重新计算。 添加新的代理服务器时，对于1/N连接，它将成为新的主服务器，旧的主服务器将成为辅助服务器。 这允许现有流程完成，因为代理服务器可以使用其本地状态（单一事实来源）做出决策。 从本质上讲，这使得数据包在到达保持其状态的预期服务器时具有“第二次机会”。</p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdrEIysIleo6MNNmfxPzyKEibgJmrjYLFRZRhDiaLbjgPaQnBeiba6YhrcQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="Alt text"></p><p>即使director仍然会将连接发送到错误的服务器，该服务器也会知道如何将数据包转发到正确的服务器。 就TCP流而言，GLB director层是完全无状态的：director服务器可以随时进出，并且总是选择相同的主/辅服务器，只要它们的转发表匹配（但它们很少改变）。 在变更代理时有些细节需要注意，我们将在下面介绍。</p><h3 id="维护Hash集合不变"><a href="#维护Hash集合不变" class="headerlink" title="维护Hash集合不变"></a>维护Hash集合不变</h3><p>GLB Director设计的核心归结为始终如一地选择主服务器和辅助服务器，并允许代理层服务器根据需要排空和填充。 我们认为每个代理服务器都有一个状态，当有服务器加入或者退出时调整状态。</p><p>我们创建一个静态二进制转发表，它以相同方式在每个控制器服务器上生成，以将进入的连接映射到给定的主服务器和辅助服务器。 我们并没有采用在数据包处理时从所有可用服务器中选择服务器的这种复杂逻辑，而是通过创建表（65k行）这种间接的方式，每行包含主服务器和辅助服务器IP地址。 该表以二维数组的方式将数据存储在内存中，每个表大约512kb。 当数据包到达时，我们始终将其（仅基于数据包数据）hash到该表中的同一行（使用hash作为数组的索引），这提供了一致的主服务器和辅助服务器对。</p><p><img src="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdDQeeGlEozAyCwWWwjWOiaogx3UhGdHdLEQhkX9PMqnPzJPaSGZ5tgWA/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="Alt text"></p><p>我们希望每个服务器在主要和辅助字段中大致相同，并且永远不会出现在同一行中。 当我们添加新服务器时，我们希望某些行使其主服务器成为辅助服务器，并且新服务器将成为主服务器。 同样，我们希望新服务器在某些行中成为辅助服务器。 当我们删除服务器时，在它是主服务器的任何行中，我们希望辅助服务器成为主服务器，而另一个服务器则成为辅助服务器。</p><p>这听起来很复杂，但可以用几个不变量简洁地概括：</p><ul><li>当我们更改服务器集时，应保持现有服务器的相对顺序。</li><li>服务器的顺序应该是可计算的，除了服务器列表之外没有任何其他状态（可能还有一些预定义的种子）。</li><li>每个服务器在每行中最多应出现一次。</li><li>每个服务器在每列中的出现次数应大致相同。</li></ul><p>针对上述的一些问题，集合hash是一个理想的选择，因为它可以很好地满足这些不变量。 每个服务器（在我们的例子中，IP）都与行号一起进行hash，服务器按该hash（只是一个数字）进行排序，并且我们获得该给定行的服务器的唯一顺序。 我们分别将前两个作为主要和次要。</p><p>将保持相对顺序，因为无论包含哪些其他服务器，每个服务器的hash都是相同的。 生成表所需的唯一信息是服务器的IP。由于我们只是对一组服务器进行排序，因此服务器只出现一次。 最后，如果我们使用伪随机的良好hash函数，那么排序将是伪随机的，因此分布将如我们所期望的那样均匀。</p><h3 id="代理-Proxy-相关操作"><a href="#代理-Proxy-相关操作" class="headerlink" title="代理(Proxy)相关操作"></a>代理(Proxy)相关操作</h3><p>添加或删除代理服务器，我们需要一些特别的处理方式。这是因为转发表条目仅定义主要/辅助代理，因此排空/故障转移仅适用单个代理主机。 我们为代理服务器定义以下有效状态和状态转换：<br><img src="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdIv6jeJj0RY41TThm4MicQIsKBXDeCl3Iub7BV2W7kXWzEF8xbmEezpA/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="Alt text"></p><p>当代理服务器处于活动状态，耗尽或填充时，它将包含在转发表条目中。 在稳定状态下，所有代理服务器都是活动的，并且上面描述的集合点散列将在主列和辅助列中具有大致均匀且随机的每个代理服务器分布。<br>当代理服务器转换为耗尽时，我们通过交换我们原本包含的主要和次要条目来调整转发表中的条目：<br><img src="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdsK7PiakWcNibeNwgnOmWMhzVjE0v4WElwCeps9O98rNB2sTUfklRL92w/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="Alt text"></p><p>这具有将数据包发送到先前次要的服务器的效果。 由于它首先接收数据包，它将接受SYN数据包，因此接受任何新连接。 对于任何不理解为与本地流有关的数据包，它将其转发到其他服务器（先前的主服务器），这允许完成现有连接。</p><p>这样可以优雅地耗尽所需的连接服务器，之后可以完全删除它，并且代理可以随机填充到第二个空槽：<br><img src="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdzo04W2RgzsXj9ibcBcDY7HPdsyfCpTClBp82NeRXBddGzaQYltutMiaw/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="Alt text"><br>填充中的节点看起来就像活动一样，因为该表本身允许第二次机会：<br><img src="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdyRGuMK96tUs7ZiaMI5QrTj62ZeLdtwMXxlzsiavLY5sP2b3JEP24fwXQ/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="Alt text"></p><p>此实现要求一次只有一个代理服务器处于活动状态以外的任何状态，这实际上在GitHub上运行良好。对代理服务器的状态更改可以与需要维护的最长连接持续时间一样快。我们正致力于设计的扩展，不仅支持主要和次要，而且一些组件（如下面列出的标题）已经包含对任意服务器列表的初始支持。</p><h3 id="数据中心内封装"><a href="#数据中心内封装" class="headerlink" title="数据中心内封装"></a>数据中心内封装</h3><p>现在有了一个算法来一致地选择后端代理服务器，但是如何在数据包内把辅助服务器（secondary server ）的信息也封装进去呢？这样主服务器可以在不理解数据包的情况下转发数据包。</p><p>LVS 的传统方式是使用IP over IP（IPIP）隧道。客户端 IP 数据包封装在内部IP数据包内，并转发到代理服务器，代理服务器对其进行解封装。但很难在 IPIP 数据包中编码其他服务器的元数据，因为唯一可用的空间是 IP 选项，数据中心路由器传递未知 IP 的数据包到处理软件（称之为“第2层慢速路径”），速度从每秒数百万到数千个数据包。<br><img src="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdylHx6KX5TG4P1pxkicblboWwU5MFiaUeMpAnWiapYdkdS4ma89e8VyyCg/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="Alt text"></p><p>为了避免这种情况，需要将数据隐藏在路由器不同数据包格式中，避免它试图去理解。我们最初采用原始 Foo-over-UDP（FOU）和自定义 GRE载荷（payload），基本上封装了 UDP 数据包中的所有内容。我们最近转换到通用 UDP 封装（GUE），它提供了封装内部 IP 协议的标准 UDP 数据包。我们将辅助服务器的 IP 放在GUE标头的私有数据中。从路由器的角度来看，这些数据包都是两个普通服务器之间的内部数据中心 UDP 数据包。</p><p>使用 UDP 的另一个好处是源端口可以使用每个连接的哈希填充，以便它们通过不同的路径（在数据中心内使用ECMP）在数据中心内流动，并可在代理服务器的 NIC 的不同 RX 队列上接收消息（类似使用 TCP/IP 头字段的哈希）。这对 IPIP 是不可能的，因为大多数数据中心的 NIC 只能理解普通 IP，TCP/IP 和 UDP/IP。值得注意的是，NIC 无法查看 IP/IP 数据包。</p><p>当代理服务器想要将数据包发送回客户端时，它不需要封装或通过我们的导向器层（director tier）返回，它可以直接发送数据到客户端（通常称为“Direct Server Return”）。这是典型的负载均衡器设计，对于内容提供商尤其有用，因为大多数情况都是出站流量远大于入站流量。<br>数据包流如下图所示：<br><img src="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdkwyxSS9q2EZD6ydAKbNP9NLpa7qQAsEd5ibIEujgnX3MHqbjZog6tibw/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="Alt text"></p><h3 id="引入DPDK"><a href="#引入DPDK" class="headerlink" title="引入DPDK"></a>引入DPDK</h3><p>自从首次公开讨论了我们的初始设计以来，我们已经完全使用 DPDK重写了 glb-director 。DPDK 是一个开源的通过绕过Linux内核，允许从用户空间进行非常快速的数据包处理的项目。这样就能够在普通 NIC 上通过 CPU 上实现 NIC 线路速率处理，并可轻松扩展导向器层，以处理与公共连接所需的入站流量一样多的流量。这在防 DDoS 攻击中尤为重要，我们不希望负载均衡器成为瓶颈。</p><p>GLB 最初的目标之一是可以在通用数据中心的硬件上运行，而无需任何特殊的硬件配置。 GLB 的 Director 和代理服务器都可像数据中心的普通服务器一样供应。每个服务器都有一对绑定的网络接口，这些接口在 GLB Director 服务器上的 DPDK 和 Linux 系统之间共享。</p><p>现代 NIC 支持SR-IOV，这种技术可以使单个 NIC 从操作系统的角度看起来像多个 NIC。这通常由虚拟机管理程序使用，以要求真实 NIC（“Physical Function”）为每个 VM 创建多个虚拟 NIC（“Virtual Functions”）。为了使 DPDK 和 Linux 内核能够共享 NIC，我们使用 flow bifurcation，它将特定流量（目标是 GLB IP 地址）发送给我们DPDK 在 Virtual Function 上处理，同时将剩余的数据包与 Linux 内核的网络堆栈保留在 Physical Function 上。</p><p>我们发现 Virtual Function 上 DPDK 的数据包处理速率可以满足要求。 GLB Director 使用 DPDK Packet Distributor模式来分发封装数据包的任务到机器上的 CPU，支持任意数量的 CPU 核心，因为它是无状态的，可以高度并行化。<br><img src="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdIiap8ptGqGhRtLT33vhuwAQBe35aA22YWckHfchTqtbIYu8kdmH0CbA/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="Alt text"></p><p>GLB Director 支持匹配和转发包含 TCP 有效负载的入站 IPv4 和 IPv6 数据包，以及作为 Path MTU Discovery的一部分的入站 ICMP Fragmentation Required 消息。</p><h3 id="使用Scapy为DPDK加入测试用例"><a href="#使用Scapy为DPDK加入测试用例" class="headerlink" title="使用Scapy为DPDK加入测试用例"></a>使用Scapy为DPDK加入测试用例</h3><p>一个典型的问题是，在创建（或使用）那些使用了低级原语（例如直接与NIC通信）但是高速运行的技术时，它们变得非常难以测试。作为创建GLB Director的一部分，我们也创建了一个测试环境，支持对我们的DPDK应用进行简单的端对端包流测试，通过影响DPDK的方式支持一个环境抽象层（EAL），允许物理NIC和基于libpcap的本地接口，在应用视图中是相同的。</p><p>这允许我们在Scapy中写测试，使用简单的Python的lib包查看，操作和写数据包。通过创建一个Linux的虚拟网卡驱动，一边用Scapy，另一边用DPDK，我们能传输定制的包并且验证我们软件在另一边支持的功能，这是一个完整GUE封装的后端代理服务期望的数据包。<br><img src="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdzIWvLwmB999nbRlAHvoiaePDJ0iaZoQVsZZoNwqHcgQLOLpmnkGicUzTA/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="Alt text"></p><p>该方法允许我们测试更多的复杂行为，例如为了正确路由，遍历传输层的ICMPv4/ICMPv6头获取源IP和TCP端口，以便正确转发来自外部路由器的ICMP消息。</p><h3 id="健康检查"><a href="#健康检查" class="headerlink" title="健康检查"></a>健康检查</h3><p>GLB的设计包含了优雅地处理服务器故障的部分。目前设计包含主/备，对于给定的转发表/客户端，意味着我们可以通过健康检查通过观察每个Director来解决单服务器故障。我们运行一个名为glb-healthcheck的服务，它不断验证每个后端服务器的GUE隧道和任意HTTP端口。</p><p>当服务器出现故障时，我们将切换主/备，将备换成主。这是服务器的“软切换”，支持故障转移的好办法。如果健康检查失败是误报，则连接不会中断，它们只会换一条不同的路径遍历。</p><p>proxy使用iptables提供第二次机会</p><p>构成GLB的最后一个组件是Netfilter模块和iptables的目标，它在每个代理服务器上运行，并提供“第二次机会”进行设计。</p><p>此模块提供了一个简单的任务，根据Linux内核TCP堆栈，确定每个GUE数据包的内部TCP / IP数据包是否在本地有效，如果不是，则将其转发到下一个代理服务器（备服务器），而不是在当前服务器解封装。</p><p>在数据包是SYN（新连接）或在本地对已建立的连接有效的情况下，当前服务器会接收它。然后，我们接收GUE包，使用包含fou模块的Linux 内核4.x GUE在本地处理它。</p><h3 id="已经开源"><a href="#已经开源" class="headerlink" title="已经开源"></a>已经开源</h3><p>当我们准备开始写一个更好的数据中心负载均衡器时，我们决定将其开源，以便其他人可以从我们的工作中受益。我们很高兴能在github/glb-director上开源所有这些组件。我们允许其他人能使用它，并且将它作为负载均衡的通用解决方案，在物理数据中心环境中的商用硬件上运行。<br><img src="https://mmbiz.qpic.cn/mmbiz_png/8XkvNnTiapOO97ibxibicCOck4YcavcDxPZdfAQtrxH1X3ibmBmRAIaKr2gpgkZiaWVbwCf5KNYsQE6D0wDjul3mFeIw/640?wx_fmt=png&amp;tp=webp&amp;wxfrom=5&amp;wx_lazy=1" alt="Alt text"></p><p>开源项目地址：<a href="https://github.com/github/glb-director" target="_blank" rel="noopener">https://github.com/github/glb-director</a></p><p>英文原文：<a href="https://githubengineering.com/glb-director-open-source-load-balancer/" target="_blank" rel="noopener">https://githubengineering.com/glb-director-open-source-load-balancer/</a></p></div><footer class="post-footer"><div class="post-tags"> <a href="/tags/glb/" rel="tag"># glb</a> <a href="/tags/load-balance/" rel="tag"># load balance</a> <a href="/tags/负载均衡/" rel="tag"># 负载均衡</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/k8s/k8s-enable-tls-ingress-20180802.html" rel="next" title="Kubernetes Ingress开启HTTPS"><i class="fa fa-chevron-left"></i> Kubernetes Ingress开启HTTPS</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"></div></div></footer></div></article><div class="post-spread"></div></div></div><div class="comments" id="comments"><div id="disqus_thread"><noscript> Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span><span class="sidebar-toggle-line sidebar-toggle-line-middle"></span><span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap"> 文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap"> 站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"> <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="luoji"><p class="site-author-name" itemprop="name">luoji</p><p class="site-description motion-element" itemprop="description">点滴生活 乐在其中</p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"> <a href="/archives"><span class="site-state-item-count">69</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"> <a href="/categories/index.html"><span class="site-state-item-count">18</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"> <a href="/tags/index.html"><span class="site-state-item-count">113</span> <span class="site-state-item-name">标签</span></a></div></nav><div class="feed-link motion-element"><a href="/atom.xml" rel="alternate"><i class="fa fa-rss"></i> RSS</a></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/gunsluo" target="_blank" title="GitHub" rel="external nofollow"><i class="fa fa-fw fa-github"></i> GitHub</a></span><span class="links-of-author-item"><a href="http://git.oschina.net/gunsluo" target="_blank" title="OsChina" rel="external nofollow"><i class="fa fa-fw fa-code"></i> OsChina</a></span><span class="links-of-author-item"><a href="https://twitter.com/gunsluo" target="_blank" title="Twitter" rel="external nofollow"><i class="fa fa-fw fa-twitter"></i> Twitter</a></span><span class="links-of-author-item"><a href="https://www.facebook.com/gunsluo" target="_blank" title="Facebook" rel="external nofollow"><i class="fa fa-fw fa-facebook"></i> Facebook</a></span></div></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用ECMP扩展IP"><span class="nav-number">1.</span> <span class="nav-text">使用ECMP扩展IP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将director-proxy分离"><span class="nav-number">2.</span> <span class="nav-text">将director/proxy分离</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将所有状态从director层移除"><span class="nav-number">3.</span> <span class="nav-text">将所有状态从director层移除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#维护Hash集合不变"><span class="nav-number">4.</span> <span class="nav-text">维护Hash集合不变</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代理-Proxy-相关操作"><span class="nav-number">5.</span> <span class="nav-text">代理(Proxy)相关操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据中心内封装"><span class="nav-number">6.</span> <span class="nav-text">数据中心内封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引入DPDK"><span class="nav-number">7.</span> <span class="nav-text">引入DPDK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Scapy为DPDK加入测试用例"><span class="nav-number">8.</span> <span class="nav-text">使用Scapy为DPDK加入测试用例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#健康检查"><span class="nav-number">9.</span> <span class="nav-text">健康检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#已经开源"><span class="nav-number">10.</span> <span class="nav-text">已经开源</span></a></li></ol></div></div></section></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2018</span><span class="with-love"><i class="fa fa-user"></i></span> <span class="author" itemprop="copyrightHolder">luoji</span></div><div class="powered-by">由 <a class="theme-link" target="_blank" rel="external nofollow" href="https://hexo.io">Hexo</a> 强力驱动</div> <span class="post-meta-divider">|</span><div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" rel="external nofollow" href="https://github.com/theme-next/hexo-theme-next">NexT.Pisces</a> v6.0.4</div></div></footer><div class="back-to-top"><i class="fa fa-arrow-up"></i></div></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script><script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script><script type="text/javascript" src="/js/src/affix.js?v=6.0.4"></script><script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=6.0.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script><script id="dsq-count-scr" src="https://jerrylou.disqus.com/count.js" async></script><script type="text/javascript">var disqus_config=function(){this.page.url="http://www.jerrylou.me/笔记/github-glb-20180811.html",this.page.identifier="笔记/github-glb-20180811.html",this.page.title="（转）重磅！GitHub发布开源负载均衡组件GLB"};function loadComments(){var t=document,e=t.createElement("script");e.src="https://jerrylou.disqus.com/embed.js",e.setAttribute("data-timestamp",""+ +new Date),(t.head||t.body).appendChild(e)}loadComments()</script><script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script><script>AV.initialize("EIRSFQCtgqHK7eaOtlKs0umf-gzGzoHsz","9myi3PwxM16hJ5efRBQhTaXf")</script><script>function showTime(e){var t=new AV.Query(e),n=[],o=$(".leancloud_visitors");o.each(function(){n.push($(this).attr("id").trim())}),t.containedIn("url",n),t.find().done(function(e){var t=".leancloud-visitors-count";if(0!==e.length){for(var i=0;i<e.length;i++){var s=e[i],r=s.get("url"),l=s.get("time"),c=document.getElementById(r);$(c).find(t).text(l)}for(i=0;i<n.length;i++){r=n[i],c=document.getElementById(r);var u=$(c).find(t);""==u.text()&&u.text(0)}}else o.find(t).text(0)}).fail(function(e,t){console.log("Error: "+t.code+" "+t.message)})}function addCount(e){var t=$(".leancloud_visitors"),n=t.attr("id").trim(),o=t.attr("data-flag-title").trim(),i=new AV.Query(e);i.equalTo("url",n),i.find({success:function(t){if(t.length>0){var i=t[0];i.fetchWhenSave(!0),i.increment("time"),i.save(null,{success:function(e){$(document.getElementById(n)).find(".leancloud-visitors-count").text(e.get("time"))},error:function(e,t){console.log("Failed to save Visitor num, with error message: "+t.message)}})}else{var s=new e,r=new AV.ACL;r.setPublicReadAccess(!0),r.setPublicWriteAccess(!0),s.setACL(r),s.set("title",o),s.set("url",n),s.set("time",1),s.save(null,{success:function(e){$(document.getElementById(n)).find(".leancloud-visitors-count").text(e.get("time"))},error:function(e,t){console.log("Failed to create")}})}},error:function(e){console.log("Error:"+e.code+" "+e.message)}})}$(function(){var e=AV.Object.extend("Counter");1==$(".leancloud_visitors").length?addCount(e):$(".post-title-link").length>1&&showTime(e)})</script></body></html>
