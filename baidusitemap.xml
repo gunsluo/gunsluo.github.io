@@ -1170,20 +1170,18 @@
 
     
   <url>
-    <loc>http://www.jerrylou.me/nosql/cassandra-golang-driver-20171219.html</loc>
+    <loc>http://www.jerrylou.me/nosql/cassandra-install-20171204.html</loc>
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     <data>
         <display>
-        <title>Cassandra数据库Golang Driver</title>
-        <pubTime>2017-12-19T09:56:27.000Z</pubTime>
+        <title>NoSQL数据库Cassandra集群部署</title>
+        <pubTime>2017-12-04T13:32:54.000Z</pubTime>
         
-        <tag>golang</tag>
-         
         <tag>cassandra</tag>
          
         <tag>nosql</tag>
          
-        <tag>driver</tag>
+        <tag>install</tag>
          
          
            
@@ -1604,18 +1602,20 @@
 
     
   <url>
-    <loc>http://www.jerrylou.me/nosql/cassandra-install-20171204.html</loc>
+    <loc>http://www.jerrylou.me/nosql/cassandra-golang-driver-20171219.html</loc>
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     <data>
         <display>
-        <title>NoSQL数据库Cassandra集群部署</title>
-        <pubTime>2017-12-04T13:32:54.000Z</pubTime>
+        <title>Cassandra数据库Golang Driver</title>
+        <pubTime>2017-12-19T09:56:27.000Z</pubTime>
         
+        <tag>golang</tag>
+         
         <tag>cassandra</tag>
          
         <tag>nosql</tag>
          
-        <tag>install</tag>
+        <tag>driver</tag>
          
          
            
