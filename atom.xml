@@ -300,6 +300,8 @@
     
       <category term="mac" scheme="http://www.jerrylou.me/tags/mac/"/>
     
+      <category term="high sierra" scheme="http://www.jerrylou.me/tags/high-sierra/"/>
+    
       <category term="hackintosh" scheme="http://www.jerrylou.me/tags/hackintosh/"/>
     
       <category term="黑苹果" scheme="http://www.jerrylou.me/tags/%E9%BB%91%E8%8B%B9%E6%9E%9C/"/>
@@ -307,8 +309,6 @@
       <category term="安装" scheme="http://www.jerrylou.me/tags/%E5%AE%89%E8%A3%85/"/>
     
       <category term="UEFI" scheme="http://www.jerrylou.me/tags/UEFI/"/>
-    
-      <category term="high sierra" scheme="http://www.jerrylou.me/tags/high-sierra/"/>
     
   </entry>
   
@@ -424,9 +424,9 @@
     
       <category term="cassandra" scheme="http://www.jerrylou.me/tags/cassandra/"/>
     
-      <category term="driver" scheme="http://www.jerrylou.me/tags/driver/"/>
-    
       <category term="nosql" scheme="http://www.jerrylou.me/tags/nosql/"/>
+    
+      <category term="driver" scheme="http://www.jerrylou.me/tags/driver/"/>
     
   </entry>
   
@@ -537,9 +537,9 @@
     
       <category term="cassandra" scheme="http://www.jerrylou.me/tags/cassandra/"/>
     
-      <category term="nosql" scheme="http://www.jerrylou.me/tags/nosql/"/>
-    
       <category term="data model" scheme="http://www.jerrylou.me/tags/data-model/"/>
+    
+      <category term="nosql" scheme="http://www.jerrylou.me/tags/nosql/"/>
     
   </entry>
   
