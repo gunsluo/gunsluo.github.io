@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://www.jerrylou.me/Golang/mongo-golang-20181110.html</loc>
+    <lastmod>2019-02-10T05:40:59.843Z</lastmod>
+    <data>
+        <display>
+        <title>Golang与Mongo数据库</title>
+        <pubTime>2018-11-10T03:15:07.000Z</pubTime>
+        
+        <tag>go</tag>
+         
+        <tag>mongo</tag>
+         
+         
+           
+             
+              <breadCrumb title="Golang" url="http://www.jerrylou.me/categories/Golang/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.jerrylou.me/vue/vue-learning-note-20181009.html</loc>
     <lastmod>2019-02-09T16:09:10.054Z</lastmod>
     <data>
@@ -236,30 +258,6 @@
 
     
   <url>
-    <loc>http://www.jerrylou.me/nosql/cassandra-data-model-20171205.html</loc>
-    <lastmod>2018-06-29T10:03:09.000Z</lastmod>
-    <data>
-        <display>
-        <title>NoSQL数据库Cassandra数据模型</title>
-        <pubTime>2017-12-05T14:16:20.000Z</pubTime>
-        
-        <tag>cassandra</tag>
-         
-        <tag>data model</tag>
-         
-        <tag>nosql</tag>
-         
-         
-           
-             
-              <breadCrumb title="nosql" url="http://www.jerrylou.me/categories/nosql/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.jerrylou.me/cadvisor/cadvisor-source-code5-20160927.html</loc>
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     <data>
@@ -279,6 +277,30 @@
            
              
               <breadCrumb title="cadvisor" url="http://www.jerrylou.me/categories/cadvisor/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.jerrylou.me/nosql/cassandra-data-model-20171205.html</loc>
+    <lastmod>2018-06-29T10:03:09.000Z</lastmod>
+    <data>
+        <display>
+        <title>NoSQL数据库Cassandra数据模型</title>
+        <pubTime>2017-12-05T14:16:20.000Z</pubTime>
+        
+        <tag>cassandra</tag>
+         
+        <tag>data model</tag>
+         
+        <tag>nosql</tag>
+         
+         
+           
+             
+              <breadCrumb title="nosql" url="http://www.jerrylou.me/categories/nosql/"/>
           
         </display>
     </data>
@@ -486,6 +508,30 @@
 
     
   <url>
+    <loc>http://www.jerrylou.me/%E5%B7%A5%E5%85%B7/dnsmasq-install-for-mac-20180605.html</loc>
+    <lastmod>2018-06-29T10:03:09.000Z</lastmod>
+    <data>
+        <display>
+        <title>使用Dnsmasq在Mac上搭建私有网络开发环境</title>
+        <pubTime>2018-06-05T13:15:30.000Z</pubTime>
+        
+        <tag>mac</tag>
+         
+        <tag>dns</tag>
+         
+        <tag>dnsmasq</tag>
+         
+         
+           
+             
+              <breadCrumb title="工具" url="http://www.jerrylou.me/categories/%E5%B7%A5%E5%85%B7/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.jerrylou.me/docker/deploy-auto-platform-20161109.html</loc>
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     <data>
@@ -518,30 +564,6 @@
 
     
   <url>
-    <loc>http://www.jerrylou.me/%E5%B7%A5%E5%85%B7/dnsmasq-install-for-mac-20180605.html</loc>
-    <lastmod>2018-06-29T10:03:09.000Z</lastmod>
-    <data>
-        <display>
-        <title>使用Dnsmasq在Mac上搭建私有网络开发环境</title>
-        <pubTime>2018-06-05T13:15:30.000Z</pubTime>
-        
-        <tag>mac</tag>
-         
-        <tag>dns</tag>
-         
-        <tag>dnsmasq</tag>
-         
-         
-           
-             
-              <breadCrumb title="工具" url="http://www.jerrylou.me/categories/%E5%B7%A5%E5%85%B7/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.jerrylou.me/docker/docker-mirror-20170410.html</loc>
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     <data>
@@ -552,6 +574,54 @@
         <tag>docker</tag>
          
         <tag>mirror</tag>
+         
+         
+           
+             
+              <breadCrumb title="docker" url="http://www.jerrylou.me/categories/docker/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.jerrylou.me/docker/docker-non-root-20170412.html</loc>
+    <lastmod>2018-06-29T10:03:09.000Z</lastmod>
+    <data>
+        <display>
+        <title>非root用户不使用sudo执行docker命令</title>
+        <pubTime>2017-04-11T16:44:24.000Z</pubTime>
+        
+        <tag>docker</tag>
+         
+        <tag>non-root</tag>
+         
+         
+           
+             
+              <breadCrumb title="docker" url="http://www.jerrylou.me/categories/docker/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.jerrylou.me/docker/docker-practice-20150429.html</loc>
+    <lastmod>2018-06-29T10:03:09.000Z</lastmod>
+    <data>
+        <display>
+        <title>Docker初体验 应用容器引擎</title>
+        <pubTime>2015-04-29T04:00:00.000Z</pubTime>
+        
+        <tag>docker</tag>
+         
+        <tag>linux</tag>
+         
+        <tag>容器</tag>
+         
+        <tag>分布式</tag>
          
          
            
@@ -588,25 +658,19 @@
 
     
   <url>
-    <loc>http://www.jerrylou.me/docker/docker-practice-20150429.html</loc>
+    <loc>http://www.jerrylou.me/%E5%B7%A5%E5%85%B7/git-principle-20140829.html</loc>
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     <data>
         <display>
-        <title>Docker初体验 应用容器引擎</title>
-        <pubTime>2015-04-29T04:00:00.000Z</pubTime>
+        <title>Git原理介绍，优雅的使用Git</title>
+        <pubTime>2014-08-29T14:32:00.000Z</pubTime>
         
-        <tag>docker</tag>
-         
-        <tag>linux</tag>
-         
-        <tag>容器</tag>
-         
-        <tag>分布式</tag>
+        <tag>git</tag>
          
          
            
              
-              <breadCrumb title="docker" url="http://www.jerrylou.me/categories/docker/"/>
+              <breadCrumb title="工具" url="http://www.jerrylou.me/categories/%E5%B7%A5%E5%85%B7/"/>
           
         </display>
     </data>
@@ -636,36 +700,16 @@
 
     
   <url>
-    <loc>http://www.jerrylou.me/docker/docker-non-root-20170412.html</loc>
+    <loc>http://www.jerrylou.me/%E5%B7%A5%E5%85%B7/gogs-install-20170428.html</loc>
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     <data>
         <display>
-        <title>非root用户不使用sudo执行docker命令</title>
-        <pubTime>2017-04-11T16:44:24.000Z</pubTime>
-        
-        <tag>docker</tag>
-         
-        <tag>non-root</tag>
-         
-         
-           
-             
-              <breadCrumb title="docker" url="http://www.jerrylou.me/categories/docker/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.jerrylou.me/%E5%B7%A5%E5%85%B7/git-principle-20140829.html</loc>
-    <lastmod>2018-06-29T10:03:09.000Z</lastmod>
-    <data>
-        <display>
-        <title>Git原理介绍，优雅的使用Git</title>
-        <pubTime>2014-08-29T14:32:00.000Z</pubTime>
+        <title>为自己安装轻量级git代码管理仓库Gogs</title>
+        <pubTime>2017-04-28T12:24:51.000Z</pubTime>
         
         <tag>git</tag>
+         
+        <tag>gogs</tag>
          
          
            
@@ -745,28 +789,6 @@
            
              
               <breadCrumb title="Golang" url="http://www.jerrylou.me/categories/Golang/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.jerrylou.me/%E5%B7%A5%E5%85%B7/gogs-install-20170428.html</loc>
-    <lastmod>2018-06-29T10:03:09.000Z</lastmod>
-    <data>
-        <display>
-        <title>为自己安装轻量级git代码管理仓库Gogs</title>
-        <pubTime>2017-04-28T12:24:51.000Z</pubTime>
-        
-        <tag>git</tag>
-         
-        <tag>gogs</tag>
-         
-         
-           
-             
-              <breadCrumb title="工具" url="http://www.jerrylou.me/categories/%E5%B7%A5%E5%85%B7/"/>
           
         </display>
     </data>
@@ -1442,12 +1464,34 @@
 
     
   <url>
-    <loc>http://www.jerrylou.me/video/jitsi-install-20180426.html</loc>
+    <loc>http://www.jerrylou.me/im/im-system-architecture-20170628.html</loc>
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     <data>
         <display>
-        <title>Jitsi开源Web视频会议-安装篇</title>
-        <pubTime>2018-04-26T12:57:00.000Z</pubTime>
+        <title>IM即时通讯系统架构设计</title>
+        <pubTime>2017-06-28T12:24:51.000Z</pubTime>
+        
+        <tag>im</tag>
+         
+        <tag>即时通讯</tag>
+         
+         
+           
+             
+              <breadCrumb title="im" url="http://www.jerrylou.me/categories/im/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.jerrylou.me/video/jitsi-auth-20180507.html</loc>
+    <lastmod>2018-06-29T10:03:09.000Z</lastmod>
+    <data>
+        <display>
+        <title>Jitsi开源Web视频会议-安全认证</title>
+        <pubTime>2018-05-07T03:47:35.000Z</pubTime>
         
         <tag>linux</tag>
          
@@ -1472,12 +1516,12 @@
 
     
   <url>
-    <loc>http://www.jerrylou.me/video/jitsi-auth-20180507.html</loc>
+    <loc>http://www.jerrylou.me/video/jitsi-install-20180426.html</loc>
     <lastmod>2018-06-29T10:03:09.000Z</lastmod>
     <data>
         <display>
-        <title>Jitsi开源Web视频会议-安全认证</title>
-        <pubTime>2018-05-07T03:47:35.000Z</pubTime>
+        <title>Jitsi开源Web视频会议-安装篇</title>
+        <pubTime>2018-04-26T12:57:00.000Z</pubTime>
         
         <tag>linux</tag>
          
@@ -1517,28 +1561,6 @@
            
              
               <breadCrumb title="笔记" url="http://www.jerrylou.me/categories/%E7%AC%94%E8%AE%B0/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.jerrylou.me/im/im-system-architecture-20170628.html</loc>
-    <lastmod>2018-06-29T10:03:09.000Z</lastmod>
-    <data>
-        <display>
-        <title>IM即时通讯系统架构设计</title>
-        <pubTime>2017-06-28T12:24:51.000Z</pubTime>
-        
-        <tag>im</tag>
-         
-        <tag>即时通讯</tag>
-         
-         
-           
-             
-              <breadCrumb title="im" url="http://www.jerrylou.me/categories/im/"/>
           
         </display>
     </data>
